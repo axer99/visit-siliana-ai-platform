@@ -136,4 +136,15 @@ docker compose up --build
 ---
 
 ## 📜 Licence
-Projet académique développé par Azer Khemiri — Visite & Préservation de Siliana, République Tunisienne © 2026.
+
+[![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-red.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+
+**© 2026 Azer Khemiri — Tous droits réservés.**
+
+Ce projet est protégé par la licence **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International**.
+
+✅ Vous pouvez **consulter** et **partager** ce projet en citant l'auteur.  
+❌ Vous **ne pouvez pas** copier, modifier, déployer ou utiliser ce code à des fins commerciales ou académiques sans autorisation explicite.
+
+> Projet de Fin d'Année (PFA) — Ingénierie Logicielle & Systèmes d'Information  
+> Développé par **Azer Khemiri** — Siliana, République Tunisienne © 2026
