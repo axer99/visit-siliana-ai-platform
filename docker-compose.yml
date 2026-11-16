@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  # 1. PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: visit_siliana_db
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-siliana123}
+      POSTGRES_DB: ${DB_NAME:-visit_siliana}
+    ports:
+      - "${DB_PORT:-5434}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    restart: unless-stopped
+
+  # 2. Express Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: visit_siliana_backend
+    environment:
+      PORT: 5000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-siliana123}
+      DB_NAME: ${DB_NAME:-visit_siliana}
+      JWT_SECRET: ${JWT_SECRET:-secret_jwt_key_visit_siliana}
+      BASE_URL: http://localhost:5000
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  # 3. Python AI Microservice (LangGraph + RAG + Open-Meteo)
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: visit_siliana_ai
+    environment:
+      PORT: 8000
+      HOST: 0.0.0.0
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-siliana123}
+      DB_NAME: ${DB_NAME:-visit_siliana}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      JWT_SECRET: ${JWT_SECRET:-secret_jwt_key_visit_siliana}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  # 4. React 19 Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: visit_siliana_frontend
+    environment:
+      VITE_API_URL: http://localhost:5000/api
+      VITE_AI_API_URL: http://localhost:8000/api
+    ports:
+      - "5175:80"
+      - "5173:80"
+    depends_on:
+      - backend
+      - ai-service
+    restart: unless-stopped
+
+volumes:
+  pgdata:
