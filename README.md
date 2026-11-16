@@ -18,30 +18,30 @@ Le projet intègre une architecture microservices moderne combinant **React 19**
 
 ```mermaid
 graph TD
-    subgraph Frontend (React 19 + Tailwind v4 + Vite)
-        VisitorUI[Portail Public & Concierge IA Flottant]
-        AdminUI[Espace Professionnel & Console Multi-Agents BI]
+    subgraph FRONTEND["Frontend — React 19 + Tailwind v4 + Vite"]
+        VisitorUI["Portail Public & Concierge IA Flottant"]
+        AdminUI["Espace Professionnel & Console Multi-Agents BI"]
     end
 
-    subgraph Backend Core (Express.js + Node.js)
-        API[API REST : Auth, Bookings, Activities, Stays, Events]
-        JWT[Sécurité JWT & Middleware de Validation]
+    subgraph BACKEND["Backend Core — Express.js + Node.js"]
+        API["API REST : Auth, Bookings, Activities, Stays, Events"]
+        JWT["Sécurité JWT & Middleware de Validation"]
     end
 
-    subgraph Base de Données
-        DB[(PostgreSQL : visit_siliana)]
+    subgraph DATABASE["Base de Données"]
+        DB[("PostgreSQL : visit_siliana")]
     end
 
-    subgraph Service IA Multi-Agents (Python FastAPI + LangGraph)
-        Concierge[Concierge Voyageur : LangGraph + RAG ChromaDB]
-        WeatherAPI[Outil Météo : Open-Meteo API en Direct]
-        
-        subgraph Multi-Agent BI Admin
-            SQLAgent[Agent Spécialiste SQL]
-            Guardrail[Guardrail Sécurité AST : Lecture Seule]
-            AnalystAgent[Agent Analyste de Données]
-            StrategyAgent[Agent Stratège Commercial]
-            VizAgent[Agent Visualisation Graphique]
+    subgraph AI["Service IA Multi-Agents — Python FastAPI + LangGraph"]
+        Concierge["Concierge Voyageur : LangGraph + RAG ChromaDB"]
+        WeatherAPI["Outil Météo : Open-Meteo API en Direct"]
+
+        subgraph BIADMIN["Multi-Agent BI Admin"]
+            SQLAgent["Agent Spécialiste SQL"]
+            Guardrail["Guardrail Sécurité AST — Lecture Seule"]
+            AnalystAgent["Agent Analyste de Données"]
+            StrategyAgent["Agent Stratège Commercial"]
+            VizAgent["Agent Visualisation Graphique"]
         end
     end
 
